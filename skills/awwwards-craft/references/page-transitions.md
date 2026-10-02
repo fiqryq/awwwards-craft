@@ -8,7 +8,7 @@ Four transition families. Pick one per site in the brief. All of them must: keep
 |---|---|---|
 | `astro:before-preparation` | link clicked, before fetching | start the cover animation; wrap `event.loader` so the swap waits for it; close the menu |
 | `astro:after-preparation` | new page fetched | hide loading indicators |
-| `astro:before-swap` | old page still visible, about to swap | **revert old page animations** (`lifecycle.js` does this) |
+| `astro:before-swap` | old page still visible, about to swap | **revert old page animations** (`lifecycle.ts` does this) |
 | `astro:after-swap` | new DOM in place | scroll to top, re-add `js-motion` class, `lenis.resize()` |
 | `astro:page-load` | new page visible, scripts run | init new page (`onPage`), uncover, `ScrollTrigger.refresh()` |
 
@@ -55,7 +55,7 @@ Persistent nav: give it `transition:persist` **and** `transition:animate="none"`
 
 ## Family 2 — GSAP cover overlay (ClientRouter)
 
-A persistent overlay (block grid, strips, SVG strokes, solid panel) covers the screen, the swap happens underneath, then it uncovers. Most "agency" feel. Use `assets/snippets/transition-cover.js`.
+A persistent overlay (block grid, strips, SVG strokes, solid panel) covers the screen, the swap happens underneath, then it uncovers. Most "agency" feel. Use `assets/snippets/transition-cover.ts`.
 
 ```astro
 <!-- TransitionOverlay.astro -->
@@ -137,13 +137,13 @@ Intercept clicks → animate cover → set `sessionStorage.transition = "1"` →
 
 - Render the preloader in BaseLayout, hidden by default in CSS; shown only when `html.js-motion` and not `sessionStorage.seen`.
 - An inline head script sets `html.classList.add("first-visit")` when `!sessionStorage.getItem("seen")`; CSS shows the preloader only under `.js-motion.first-visit`.
-- `assets/snippets/preloader.js` runs the score once, sets `seen`, removes the node, then dispatches `document.dispatchEvent(new CustomEvent("preloader:done"))` so the hero entrance can start (or the hero entrance is part of the preloader timeline).
+- `assets/snippets/preloader.ts` runs the score once, sets `seen`, removes the node, then dispatches `document.dispatchEvent(new CustomEvent("preloader:done"))` so the hero entrance can start (or the hero entrance is part of the preloader timeline).
 - On client navigations the preloader never appears (ClientRouter doesn't re-run its module and the node is gone).
 - The hero entrance on later navigations runs immediately with a short delay (~0.3s, after the uncover starts).
 
 ## Menu wiring
 
-- Persist the menu (`transition:persist`), so its listeners from `menu.js` survive navigation.
+- Persist the menu (`transition:persist`), so its listeners from `menu.ts` survive navigation.
 - If a link inside the open menu is clicked, let the cover close over the menu and reset the menu on `astro:after-swap` (resetting on `before-preparation` flashes the faded page).
 - `lenis.stop()` while open; Escape closes; focus trap; toggle `aria-expanded`; `inert` on `<main>` while open.
 

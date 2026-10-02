@@ -4,7 +4,8 @@ WebGL earns its place when it *is* the concept (a liquid brand, a lens, a signal
 
 ## Setup in Astro
 
-- `npm i three` (or `ogl` for tiny single-effect scenes).
+- `npm i three && npm i -D @types/three` (or `ogl`, which ships its own types, for tiny single-effect scenes).
+- Type scene modules: `export function createScene(root: HTMLElement): () => void`, uniforms as `{ uProgress: { value: number }; uTexCurrent: { value: THREE.Texture | null } }`, and `THREE.ShaderMaterial<…>`-style explicit types where inference is weak.
 - Mount in a component: `<div class="gl" data-gl><img class="gl-fallback" … /></div>`. The fallback image is visible by default; hide it with a class only after the first frame renders.
 - Lazy-load three only when the element is near the viewport:
 
@@ -15,7 +16,7 @@ onPage("[data-gl]", (root, { reduced }) => {
   const io = new IntersectionObserver(async ([e]) => {
     if (!e.isIntersecting) return;
     io.disconnect();
-    const { createScene } = await import("../scripts/gl/ripple-slider.js");
+    const { createScene } = await import("../scripts/gl/ripple-slider");
     dispose = createScene(root);   // must return a full cleanup function
   }, { rootMargin: "200px" });
   io.observe(root);

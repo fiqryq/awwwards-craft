@@ -38,7 +38,7 @@ Gotchas: `lenis.stop()` while running; first visit only; remove the preloader no
 
 See `motion-language.md` → SplitText rules and reveal variants. Extra recipes:
 
-**Reusable copy reveal** — `assets/snippets/copy-reveal.js` scans `[data-copy]` elements:
+**Reusable copy reveal** — `assets/snippets/copy-reveal.ts` scans `[data-copy]` elements:
 - `data-copy="lines|words|chars"` (default lines)
 - `data-variant="slide|flicker|scramble"`
 - `data-delay="0.2"`, `data-scroll="false"` (play on load instead of on scroll), `data-start="top 80%"`
@@ -49,7 +49,7 @@ See `motion-language.md` → SplitText rules and reveal variants. Extra recipes:
 
 **Gooey blur reveal** — wrap lines in an element with `filter: url(#goo)`, where the SVG filter is `feGaussianBlur` + `feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 255 -140"`; animate inner span `filter: blur(0.35em) → blur(0)`, 1.5s `power3.out`, stagger 0.1. The alpha threshold turns the blur into a liquid edge.
 
-**Scramble** — `assets/snippets/scramble.js`: per char, cycle random glyphs every 25–50ms for 0.25s, then settle; stagger 50ms. Use mono fonts or fixed-width spans to avoid layout jitter.
+**Scramble** — `assets/snippets/scramble.ts`: per char, cycle random glyphs every 25–50ms for 0.25s, then settle; stagger 50ms. Use mono fonts or fixed-width spans to avoid layout jitter.
 
 **Masked word swap** — headline cycles words: current word `y: 0 → -100%`, next `100% → 0`, 0.75s `power3.inOut`, every 2s.
 
@@ -57,7 +57,7 @@ See `motion-language.md` → SplitText rules and reveal variants. Extra recipes:
 
 Only on `(hover: hover) and (pointer: fine)`.
 
-**Magnetic element** (`assets/snippets/magnetic.js`) — on move, `quickTo(x/y)` toward `(pointer - center) * 0.3–0.4`; inner label moves extra (×0.15) for depth; on leave back to 0 with `elastic.out(1, 0.3)`, 1s.
+**Magnetic element** (`assets/snippets/magnetic.ts`) — on move, `quickTo(x/y)` toward `(pointer - center) * 0.3–0.4`; inner label moves extra (×0.15) for depth; on leave back to 0 with `elastic.out(1, 0.3)`, 1s.
 
 **Cursor-follow preview** — a fixed image follows the cursor with `quickTo` (duration 0.6, `power3`); on row enter swap `src`, scale 0→1 `elastic.out(1,0.5)`, random rotation ±8°.
 
@@ -153,7 +153,7 @@ Pair with menu link chars flying in from `x: "750%"` with `elastic.out(1, 0.25)`
 
 ## 8. ASCII / glyph effects
 
-Shared pipeline (`assets/snippets/ascii.js`):
+Shared pipeline (`assets/snippets/ascii.ts`):
 1. Draw the source image/logo into a tiny offscreen canvas (`cols × rows`, rows = `cols / aspect`).
 2. `getImageData` → luma `0.299R + 0.587G + 0.114B`.
 3. Map to a ramp like `" .:-=+*#%@"` (invert for dark-on-light).

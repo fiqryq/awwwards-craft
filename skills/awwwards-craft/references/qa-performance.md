@@ -5,6 +5,7 @@ Run this loop after the first full build and again after every major change. Do 
 ## 1. Build
 
 ```bash
+npx astro check                     # must be 0 errors, 0 warnings (strictest tsconfig)
 npm run build
 PORT=$((4400 + RANDOM % 500))       # random port: parallel agents/projects collide on defaults
 npx astro preview --port $PORT      # Astro 7 may background the server; stop it with `npx astro preview stop`
@@ -36,7 +37,7 @@ Judge screenshots against the brief and the anti-generic checklist: is the hiera
 
 ## 4. Reduced motion
 
-Open the page with `?reduced` in the URL (`lenis-gsap.js` and the head script treat it as reduced motion — DevTools tools often can't emulate the media query), or `emulate` it if supported:
+Open the page with `?reduced` in the URL (`lenis-gsap.ts` and the head script treat it as reduced motion — DevTools tools often can't emulate the media query), or `emulate` it if supported:
 - No preloader, no Lenis, no pins; all content visible in final state.
 - Page navigation is an instant swap.
 - The site still looks designed — this is the static layout you built first.
@@ -63,6 +64,7 @@ Common fixes:
 ## 6. Final checklist
 
 - [ ] `BRIEF.md` exists and the site matches it.
+- [ ] `astro check` passes with 0 errors / 0 warnings on the strictest tsconfig; no `any`, no `@ts-ignore`.
 - [ ] No Tailwind or utility framework anywhere (`package.json`, config, class soup).
 - [ ] Tokens on `:root`; components use tokens, not raw hex.
 - [ ] Fonts loaded via Astro Fonts API (or licensed local files).

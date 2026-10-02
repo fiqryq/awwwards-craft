@@ -4,7 +4,7 @@ A site feels "designed" when every motion belongs to the same family: same few e
 
 ## Eases
 
-Register custom eases once (`assets/snippets/eases.js`):
+Register custom eases once (`assets/snippets/eases.ts`):
 
 ```js
 CustomEase.create("hop",   "0.9, 0, 0.1, 1");   // big wipes, covers, preloader exits, menu clip, page transitions
@@ -170,7 +170,7 @@ When `prefers-reduced-motion: reduce`:
 - Text and images appear in their final state, or fade in with `opacity` over 0.3s.
 - Page transitions: instant swap (Astro does this automatically for its own animations; make GSAP covers skip too).
 
-`lenis-gsap.js` exports `reducedMotion`; `onPage()` passes `{ reduced }` to every setup.
+`lenis-gsap.ts` exports `reducedMotion`; `onPage()` passes `{ reduced }` to every setup.
 
 ## Performance rules
 

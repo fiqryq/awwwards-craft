@@ -163,7 +163,7 @@ Rules:
 - Skip entirely under reduced motion.
 - `lenis.stop()` during; `lenis.start()` + `ScrollTrigger.refresh(true)` after; `preloader.remove()`.
 - Total length 3–6s. Longer only if the preloader *is* the experience.
-- The hero entrance must run on **every** visit to the page, not only after the preloader: `preloader.js` exports an `introDone` promise; the hero's own `onPage(".hero")` awaits it (resolves immediately when there's no preloader). Mark hero copy `data-copy-manual` so the generic reveal skips it.
+- The hero entrance must run on **every** visit to the page, not only after the preloader: `preloader.ts` exports an `introDone` promise; the hero's own `onPage(".hero")` awaits it (resolves immediately when there's no preloader). Mark hero copy `data-copy-manual` so the generic reveal skips it.
 
 Example score (absolute times):
 ```

@@ -8,8 +8,27 @@ Verified against Astro 7 docs (view transitions + fonts). If the installed major
 npm create astro@latest my-site -- --template minimal --install --no-git --skip-houston
 cd my-site
 npm i gsap lenis
+npm i -D @astrojs/check typescript
 # only if the brief needs WebGL:
-npm i three
+npm i three && npm i -D @types/three
+```
+
+Use the strictest TypeScript preset (the minimal template ships `strict`):
+
+```json
+// tsconfig.json
+{
+  "extends": "astro/tsconfigs/strictest",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"]
+}
+```
+
+Add a check script and keep it at **0 errors, 0 warnings**:
+
+```json
+// package.json
+"scripts": { "check": "astro check", "build": "astro check && astro build" }
 ```
 
 Do **not** run `astro add tailwind`. Delete any Tailwind config if a template brought one in.
@@ -26,11 +45,27 @@ src/
   layouts/BaseLayout.astro
   pages/index.astro  work.astro  about.astro  contact.astro  work/[slug].astro
   scripts/             # copied & adapted from the skill's assets/snippets/
-    lenis-gsap.js  eases.js  lifecycle.js  copy-reveal.js  preloader.js  menu.js  transition-cover.js ...
+    lenis-gsap.ts  eases.ts  lifecycle.ts  copy-reveal.ts  preloader.ts  menu.ts  transition-cover.ts ...
   styles/global.css
 astro.config.mjs
 BRIEF.md
 ```
+
+Each component types its props and owns its markup and a scoped `<style>`:
+
+```astro
+---
+interface Props {
+  title: string;
+  eyebrow?: string;
+  tone?: "paper" | "ink";
+}
+const { title, eyebrow, tone = "paper" } = Astro.props;
+---
+<section class:list={["feature", tone]} data-feature>…</section>
+```
+
+`<script>` tags in `.astro` files are TypeScript by default — import the snippets without extensions (`import { onPage } from "../scripts/lifecycle"`) and type DOM queries with generics (`root.querySelector<HTMLElement>(".dot")`), handling `null`. Shared data (projects, pricing, curves) lives in typed modules (`src/data/projects.ts` with an exported interface) or content collections with a Zod schema.
 
 Each component owns its markup and a scoped `<style>`; shared tokens and utilities live in `global.css`. Section-specific animation code lives in a `<script>` inside that section's component (Astro bundles it as a module and loads it once).
 
@@ -101,8 +136,8 @@ const { title, description = "" } = Astro.props;
     <TransitionOverlay />
     <main class="page"><slot /></main>
     <script>
-      import "../scripts/lenis-gsap.js";
-      import "../scripts/transition-cover.js";
+      import "../scripts/lenis-gsap";
+      import "../scripts/transition-cover";
     </script>
   </body>
 </html>
@@ -111,7 +146,7 @@ const { title, description = "" } = Astro.props;
 - `transition:animate="none"` on `<html>` disables Astro's default crossfade so a GSAP cover transition owns the moment. If you use a **CSS view-transition** design instead, remove it and define the animation (see `page-transitions.md`).
 - **Persist nav, menu and overlay by putting `transition:persist` on each component's ROOT ELEMENT** (inside `Nav.astro`: `<header class="nav" transition:persist="nav">`). On a plain `.astro` component tag the directive emits nothing, so the element is silently replaced on every swap — menus stop working and cover overlays animate detached nodes. Persisted elements should also get `transition:animate="none"`.
 - Scripts for persisted components run once and may cache their elements; scripts for swapped content must query at call time or live inside `onPage()`.
-- Single-page sites: drop `<ClientRouter />`; everything still works because `lifecycle.js` also runs on first load.
+- Single-page sites: drop `<ClientRouter />`; everything still works because `lifecycle.ts` also runs on first load.
 
 ## Script lifecycle under ClientRouter
 
@@ -122,14 +157,14 @@ Facts from the docs that shape everything:
 - `astro:page-load` also fires on the initial page load.
 - With `prefers-reduced-motion`, Astro skips its own transition animations automatically.
 
-So: **module code registers; page code runs inside `onPage()`** from `assets/snippets/lifecycle.js`:
+So: **module code registers; page code runs inside `onPage()`** from `assets/snippets/lifecycle.ts`:
 
 ```js
 // inside src/components/sections/Spotlight.astro <script>
-import { gsap, ScrollTrigger } from "../../scripts/lenis-gsap.js";
-import { onPage } from "../../scripts/lifecycle.js";
+import { gsap, ScrollTrigger } from "../../scripts/lenis-gsap";
+import { onPage } from "../../scripts/lifecycle";
 
-onPage(".spotlight", (root, { mm, reduced }) => {
+onPage<HTMLElement>(".spotlight", (root, { mm, reduced }) => {
   if (reduced) return;                       // static layout is the reduced-motion version
   mm.add("(min-width: 1000px)", () => {
     ScrollTrigger.create({
@@ -150,7 +185,7 @@ Give section roots **unique** class names or data attributes (`[data-scene="sun-
 
 ## Lenis + GSAP boot (once)
 
-`assets/snippets/lenis-gsap.js` does:
+`assets/snippets/lenis-gsap.ts` does:
 
 1. `gsap.registerPlugin(ScrollTrigger, SplitText, CustomEase, Flip)` once and registers the house eases.
 2. Creates **one** Lenis instance (skipped under reduced motion) with `autoRaf: false`, drives it from `gsap.ticker`, sets `lagSmoothing(0)`, and forwards `lenis.on("scroll", ScrollTrigger.update)`.

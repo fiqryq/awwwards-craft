@@ -1,6 +1,14 @@
 {
   "name": "kopi-roastery",
   "private": true,
-  "scripts": { "dev": "next dev", "build": "next build", "start": "next start" },
-  "dependencies": { "next": "latest", "react": "latest", "react-dom": "latest" }
+  "scripts": {
+    "dev": "node api.js && next dev",
+    "build": "next build",
+    "start": "node api.js && next start"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  }
 }

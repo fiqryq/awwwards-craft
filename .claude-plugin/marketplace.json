@@ -6,7 +6,7 @@
     {
       "name": "awwwards-craft",
       "source": "./",
-      "description": "Build Awwwards-level websites: Astro + pure CSS, GSAP/Lenis motion, preloaders, page transitions, WebGL, curated palettes and Fontshare pairs.",
+      "description": "Build Awwwards-level websites: Astro + TypeScript + pure CSS, GSAP/Lenis motion, preloaders, page transitions, WebGL, curated palettes and Fontshare pairs.",
       "version": "1.0.0"
     }
   ]

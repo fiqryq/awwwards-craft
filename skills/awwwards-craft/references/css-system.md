@@ -173,7 +173,7 @@ Set the class with a tiny inline script in `<head>` (runs before paint):
 </script>
 ```
 
-With `<ClientRouter />`, Astro replaces the `<html>` attributes with the new document's on every swap, so the class can disappear. `lenis-gsap.js` adds it back on `astro:after-swap`. Keep that if you change the boot code.
+With `<ClientRouter />`, Astro replaces the `<html>` attributes with the new document's on every swap, so the class can disappear. `lenis-gsap.ts` adds it back on `astro:after-swap`. Keep that if you change the boot code.
 
 ## Buttons (CSS-only hover)
 
