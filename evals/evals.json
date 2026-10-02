@@ -1,0 +1,23 @@
+{
+  "skill_name": "awwwards-craft",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "build me an awwwards-style portfolio website for 'Rumah Cahaya', a small architecture studio in Jakarta. home page with a preloader, work section, about and contact. make it feel premium",
+      "expected_output": "A new Astro project with pure CSS (no Tailwind), BRIEF.md, tokens on :root, preloader (first visit only), hero, stacked work cards or pinned scene, footer; GSAP + Lenis wired with cleanup and reduced-motion handling; builds successfully.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I need a site for a fashion label called NOIRE — 3 pages (home, collection, about). home hero should be a WebGL image slider with a ripple effect when you click, and I want cool page transitions between the pages",
+      "expected_output": "Astro multi-page site with ClientRouter, persisted nav/overlay, a GSAP cover or CSS view transition, a three.js ripple slider with static fallback and disposal, cleanup on astro:before-swap, pure CSS.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "here's my next.js landing page for a coffee roastery (app router, plain css modules). can you make it feel award-winning? scroll animations, nicer text reveals, maybe a menu animation. don't add tailwind",
+      "expected_output": "Keeps Next.js, adds gsap/@gsap/react/lenis with useGSAP cleanup, Copy reveal component, menu timeline, scroll scenes; CSS stays CSS Modules; no Tailwind.",
+      "files": ["evals/files/next-coffee"]
+    }
+  ]
+}

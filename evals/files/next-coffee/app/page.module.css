@@ -1,0 +1,10 @@
+.nav { display: flex; justify-content: space-between; padding: 1rem 2rem; }
+.menuBtn { background: none; border: 1px solid #222; padding: 0.4rem 0.9rem; cursor: pointer; }
+.hero { padding: 8rem 2rem; text-align: center; }
+.hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+.btn { display: inline-block; margin-top: 2rem; padding: 0.8rem 1.6rem; background: #6b3e26; color: #fff; text-decoration: none; }
+.beans { padding: 4rem 2rem; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
+.card { background: #fff; padding: 1.5rem; border-radius: 8px; }
+.story { padding: 6rem 2rem; background: #6b3e26; color: #fff; }
+.footer { padding: 2rem; text-align: center; font-size: 0.85rem; }

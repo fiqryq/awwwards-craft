@@ -1,0 +1,10 @@
+{
+  "name": "awwwards-craft",
+  "version": "1.0.0",
+  "description": "Build Awwwards-level websites: Astro + pure CSS, GSAP/Lenis motion, preloaders, page transitions, WebGL, curated palettes and Fontshare pairs.",
+  "author": { "name": "Fiqry Choerudin", "url": "https://github.com/fiqryq" },
+  "homepage": "https://github.com/fiqryq/awwwards-craft",
+  "repository": "https://github.com/fiqryq/awwwards-craft",
+  "license": "MIT",
+  "keywords": ["awwwards", "web-design", "gsap", "lenis", "astro", "animation", "webgl", "frontend"]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "awwwards-craft",
+  "description": "Skills for building award-level websites.",
+  "owner": { "name": "Fiqry Choerudin", "url": "https://github.com/fiqryq" },
+  "plugins": [
+    {
+      "name": "awwwards-craft",
+      "source": "./",
+      "description": "Build Awwwards-level websites: Astro + pure CSS, GSAP/Lenis motion, preloaders, page transitions, WebGL, curated palettes and Fontshare pairs.",
+      "version": "1.0.0"
+    }
+  ]
+}
